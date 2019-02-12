@@ -1,6 +1,6 @@
 ## Spotify Notifications
 
-[![Build Status](https://travis-ci.org/citruspi/Spotify-Notifications.png?branch=master)](https://travis-ci.org/citruspi/Spotify-Notifications)
+[![Build Status](https://travis-ci.org/NorfolkNChance/Spotify-Notifications.svg?branch=master)](https://travis-ci.org/NorfolkNChance/Spotify-Notifications)
 
 Spotify Notifications does nothing more than display a notification when:
 
