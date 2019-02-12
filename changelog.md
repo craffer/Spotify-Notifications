@@ -3,6 +3,10 @@
 - Now use higher resolution album artwork without the Spotify logo in the corner
 - Renamed 'Black' icon style to 'Auto (Black/White)'
 
+### 0.6.1 (February 12, 2019)
+- Fix 10.14 SDK display issues (implemented by [James Burns](https://github.com/norfolknchance))
+- Manually added https://github.com/citruspi/Spotify-Notifications/pull/99 
+
 ### 0.6.0 (October 05, 2016)
 
 - Code refactor (implemented by [Seb Jachec](https://github.com/sebj))
