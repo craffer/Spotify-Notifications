@@ -16,7 +16,7 @@
     //Register default preferences values
     [NSUserDefaults.standardUserDefaults registerDefaults:[NSDictionary dictionaryWithContentsOfFile:[NSBundle.mainBundle pathForResource:@"UserDefaults" ofType:@"plist"]]];
     
-    spotify =  [SBApplication applicationWithBundleIdentifier:SpotifyBundleID];
+    spotify = [SBApplication applicationWithBundleIdentifier:SpotifyBundleID];
 
     [NSUserNotificationCenter.defaultUserNotificationCenter setDelegate:self];
     
@@ -60,7 +60,7 @@
          
          NSUserNotification *notification = [self userNotificationForCurrentTrack];
          
-         if (currentTrack.name.length == 0) {
+         if (self->currentTrack.name.length == 0) {
              
              notification.title = @"No Song Playing";
              
@@ -193,6 +193,7 @@
 
 - (void)notPlaying {
     _openSpotifyMenuItem.title = @"Open Spotify (Not Playing)";
+    [_currentSongMenuItem setHidden:YES];
     
     [NSUserNotificationCenter.defaultUserNotificationCenter removeAllDeliveredNotifications];
 }
@@ -218,6 +219,8 @@
             currentTrack = spotify.currentTrack;
         }
         
+        [self showCurrentSongMenuIfNeeded];
+        
         NSUserNotification *userNotification = [self userNotificationForCurrentTrack];
         [self deliverUserNotification:userNotification Force:NO];
         
@@ -227,6 +230,15 @@
         [self notPlaying];
     }
 
+}
+
+- (void)showCurrentSongMenuIfNeeded {
+    if ([currentTrack.artist isNotEqualTo:NULL]
+        && [currentTrack.name isNotEqualTo:NULL]
+        && [NSUserDefaults.standardUserDefaults boolForKey:kShowCurrentSongMenu]) {
+        [_currentSongMenuItem setHidden:NO];
+        _currentSongMenuItem.title = [NSString stringWithFormat:@"%@ - %@", currentTrack.name, currentTrack.artist];
+    }
 }
 
 #pragma mark - Preferences
@@ -267,6 +279,16 @@
     BOOL launchAtLogin = sender.state;
     [NSUserDefaults.standardUserDefaults setBool:launchAtLogin forKey:kLaunchAtLoginKey];
     [LaunchAtLogin setAppIsLoginItem:launchAtLogin];
+}
+
+- (IBAction)toggleShowCurrentSongMenu:(NSButton *)sender {
+    BOOL showCurrentSongMenu = sender.state;
+    if (spotify.playerState == SpotifyEPlSPlaying && showCurrentSongMenu) {
+        [self showCurrentSongMenuIfNeeded];
+        
+    } else {
+        [_currentSongMenuItem setHidden:YES];
+    }
 }
 
 #pragma mark - Preferences Info Buttons
