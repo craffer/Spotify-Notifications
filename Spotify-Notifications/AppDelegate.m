@@ -169,6 +169,7 @@
 }
 
 - (void)deliverUserNotification:(NSUserNotification*)notification Force:(BOOL)force {
+    if (currentTrack.name.length == 0) return;
     BOOL frontmost = [NSWorkspace.sharedWorkspace.frontmostApplication.bundleIdentifier isEqualToString:SpotifyBundleID];
     
     if (frontmost && [NSUserDefaults.standardUserDefaults boolForKey:kDisableWhenSpotifyHasFocusKey]) return;
